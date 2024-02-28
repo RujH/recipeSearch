@@ -35,9 +35,12 @@ const Search = () =>  {
     setIngredients(event.target.value);
   };
 
-  const handleGetInstructionsButton = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setIngredients(event.target.value);
+ 
+  
+  const openUrlInNewPage = (url: string) => {
+    window.open(url, '_blank');
   };
+
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -45,12 +48,13 @@ const Search = () =>  {
     const recipes = await searchRecipeAPI.fetchData(ingredients);
 
     setRecipe(recipes)
+    console.log(recipes[0].url)
     setShowCard(true)
 
   };
 
   return (
-    <div className="App">
+    <div >
      <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid text-center">
           <a className="navbar-brand " href="#">Recipe Search</a>
@@ -80,7 +84,7 @@ const Search = () =>  {
               onChange={handleSubmitButton}
             />
             
-            <button className="btn btn-outline-success" type="submit">Search</button>
+            <button className="btn btn-primary" type="submit">Search</button>
           </form>
 
         </div>
@@ -106,24 +110,18 @@ const Search = () =>  {
                         
                           <h3 className="card-title">{item.title}</h3>
                           <h6>Total Calories: {item.calories.toFixed()}</h6>
-                          {/* <ul className='list-group'> */}
-                            {item.ingredients.map((ingredient: any)=>(
-                                <li className='list-group-item text-start'>{ingredient.text}</li>
+                          {item.ingredients.map((ingredient: any)=>(
+                            <li className='list-group-item text-start'>{ingredient.text}</li>
 
                             ))
-                            }
-                          {/* </ul> */}
-                          
-                          <a href={item.url}>
-                            <button 
-                              className="btn btn-outline-success" 
-                              type="submit" 
-                              onClick= {()=>handleGetInstructionsButton}>
-                              
-                              Full Recipe
-                              
-                            </button>
-                          </a>
+                          }
+                          <button 
+                            className="btn btn-outline-success" 
+                            type="submit" 
+                            onClick= {()=>openUrlInNewPage(item.url)}>
+                            Full Recipe
+                            
+                          </button>
                        </div>
 
                       </div>
