@@ -6,14 +6,9 @@ import '../App.css';
 
 import searchRecipeAPI from "../service/recipeSearchAPI"
 
-
-
 const Home = () =>  {
 
   const [ingredients, setIngredients] = useState<string>("");
-
-  
-
 
   const handleSubmitButton = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setIngredients(event.target.value);
@@ -27,9 +22,6 @@ const Home = () =>  {
     event.preventDefault();
     // Do something with the textareaValue, e.g., send it to the server
     const recipes = await searchRecipeAPI.fetchData(ingredients);
-
-   
-
   };
 
   return (

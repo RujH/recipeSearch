@@ -5,7 +5,6 @@ import '../App.css';
 import searchRecipeAPI from "../service/recipeSearchAPI"
 import RecipeInfo from "../utils/recipeInfo"
 
-
 const Search = () =>  {
 
   const defaultValues: RecipeInfo = {
@@ -26,21 +25,16 @@ const Search = () =>  {
 }
 
   const [showCard, setShowCard] = useState<boolean>(false);
-
   const [ingredients, setIngredients] = useState<string>("");
   const [recipe, setRecipe] = useState<RecipeInfo[]>([defaultValues]);
 
-
-  const handleSubmitButton = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleSubmitButton = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIngredients(event.target.value);
   };
 
- 
-  
   const openUrlInNewPage = (url: string) => {
     window.open(url, '_blank');
   };
-
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -75,16 +69,15 @@ const Search = () =>  {
       <div className= 'pt-4 row justify-content-center'>
         <div className= 'col-sm-7'>
           <form className="d-flex" onSubmit={handleFormSubmit}>
-            <textarea 
+            <input 
               className="form-control me-2" 
-              rows={1}
               placeholder="Enter ingredients" 
               aria-label="Search"
               value={ingredients}
               onChange={handleSubmitButton}
             />
             
-            <button className="btn btn-primary" type="submit">Search</button>
+            <button className="btn btn-primary search-btn" type="submit">Search</button>
           </form>
 
         </div>
@@ -95,43 +88,34 @@ const Search = () =>  {
         {
           showCard ? 
 
-            recipe.map((item: any) => (
-              <div className="pt-4">
-                <div className="col mb-4">
-                  <div className="card w-60 ms-4 me-4">
-                    <div className="row no-gutters">
-
-                      <div className="col-md-4">
-                        <img src= {item.image} width="300" height="300" className="m-2 card-img-left"/>
-                      </div>
-
-                      <div className="col-md-8">
-                        <div className="card-body">
-                        
-                          <h3 className="card-title">{item.title}</h3>
-                          <h6>Total Calories: {item.calories.toFixed()}</h6>
-                          {item.ingredients.map((ingredient: any)=>(
-                            <li className='list-group-item text-start'>{ingredient.text}</li>
-
-                            ))
-                          }
-                          <button 
-                            className="btn btn-outline-success" 
-                            type="submit" 
-                            onClick= {()=>openUrlInNewPage(item.url)}>
-                            Full Recipe
-                            
-                          </button>
-                       </div>
-
-                      </div>
+          recipe.map((item: any) => (
+            <div className="pt-4 d-flex justify-content-center">
+              <div className="card mb-2 shadow-lg card-custom"> 
+                <div className="row">
+                  <div className="col-md-5 d-flex align-items-center justify-content-center image-padding">
+                    <img src={item.image} alt="Recipe" className="img-fluid" />
+                  </div>
+                  <div className="col-md-7">
+                    <div className="card-body d-flex flex-column text-dark">
+                      <h3 className="card-title">{item.title}</h3>
+                      <h6>Total Calories: {item.calories.toFixed()}</h6>
+                      <ul className="list-group list-group-flush list-custom"> 
+                        {item.ingredients.map((ingredient: any) => (
+                          <li className="list-group-item text-start">{ingredient.text}</li>
+                        ))}
+                      </ul>
+                      <button 
+                        className="btn btn-primary mt-4" 
+                        type="submit" 
+                        onClick={() => openUrlInNewPage(item.url)}>
+                        Full Recipe
+                      </button>
                     </div>
-                    
                   </div>
                 </div>
               </div>
-      
-            ))
+            </div>
+          ))                                  
           
           :
           <div></div>

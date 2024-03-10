@@ -59,3 +59,26 @@
 .btn-lg{
   width: 15%;
 }
+
+.card-custom {
+  width: 40rem;
+  background-color: #f8f9fa;
+}
+
+.img-center {
+  margin: 0 auto;
+}
+
+.list-custom {
+  max-height: 200px;
+  background-color: #e9ecef;
+  overflow: auto; /* Ensuring the overflow is set correctly */
+}
+
+.image-padding {
+  padding: 1.5rem; 
+}
+
+.search-btn{
+  width: 20%;
+}
